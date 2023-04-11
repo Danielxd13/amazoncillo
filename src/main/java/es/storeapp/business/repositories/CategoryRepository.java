@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CategoryRepository extends AbstractRepository<Category> {
 
-    private static final String FIND_HIGHLIGHTED_QUERY = "SELECT c FROM Category c WHERE c.highlighted = true";
+    private static final String FIND_HIGHLIGHTED_QUERY = "SELECT c FROM Category c WHERE c.highlighted = ?";
 
-    public List<Category> findHighlighted() {
+    public List<Category> findHighlighted(boolean highlighted) {
         Query query = entityManager.createQuery(FIND_HIGHLIGHTED_QUERY);
+        query.setParameter(1, highlighted);
         return (List<Category>) query.getResultList();
     }
-    
+
 }

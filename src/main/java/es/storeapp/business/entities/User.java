@@ -31,26 +31,82 @@ public class User implements Serializable {
         this.address = address;
         this.image = image;
     }
-    
+
+    private void validarName(String name) throws InvalidNameException {
+        if (name == null || name.isEmpty()) {
+            throw new InvalidNameException("El nombre es obligatorio.");
+        }
+    }
+
+    private void validarEmail(String email) throws InvalidEmailException {
+        if (email == null || email.isEmpty()) {
+            throw new InvalidEmailException("El email es obligatorio.");
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).find()) {
+            throw new InvalidEmailException("El email no tiene un formato válido.");
+        }
+    }
+
+    private void validarPassword(String password) throws InvalidPasswordException {
+        if (password == null || password.isEmpty()) {
+            throw new InvalidPasswordException("La contraseña es obligatoria.");
+        } else if (password.length() < 8) {
+            throw new InvalidPasswordException("La contraseña debe contener al menos 8 caracteres.");
+        }
+    }
+
+    private void validarAddress(String address) throws InvalidAddressException {
+        if (address == null || address.isEmpty()) {
+            throw new InvalidAddressException("La dirección es obligatoria.");
+        }
+    }
+
+    class InvalidNameException extends Exception {
+
+        public InvalidNameException(String message) {
+            super(message);
+        }
+    }
+
+    class InvalidEmailException extends Exception {
+
+        public InvalidEmailException(String message) {
+            super(message);
+        }
+    }
+
+    class InvalidPasswordException extends Exception {
+
+        public InvalidPasswordException(String message) {
+            super(message);
+        }
+    }
+
+    class InvalidAddressException extends Exception {
+
+        public InvalidAddressException(String message) {
+            super(message);
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    
-    @Column(name = "name", nullable = false, unique = false)
+
+    @Column(name = "name", nullable = true, unique = false)
     private String name;
-    
-    @Column(name = "email", nullable = false, unique = true)
+
+    @Column(name = "email", nullable = true, unique = true)
     private String email;
-    
-    @Column(name = "password", nullable = false)
+
+    @Column(name = "password", nullable = true)
     private String password;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = true)
     private String address;
 
     @Column(name = "resetPasswordToken")
     private String resetPasswordToken;
-    
+
     @Embedded
     @AttributeOverrides(value = {
         @AttributeOverride(name = "card", column = @Column(name = "card")),
@@ -59,13 +115,13 @@ public class User implements Serializable {
         @AttributeOverride(name = "expirationYear", column = @Column(name = "expirationYear"))
     })
     private CreditCard card;
-    
+
     @Column(name = "image")
     private String image;
-    
+
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
-    
+
     public Long getUserId() {
         return userId;
     }
@@ -140,8 +196,8 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("User{userId=%s, name=%s, email=%s, password=%s, address=%s, resetPasswordToken=%s, card=%s, image=%s}", 
-            userId, name, email, password, address, resetPasswordToken, card, image);
+        return String.format("User{userId=%s, name=%s, email=%s, password=%s, address=%s, resetPasswordToken=%s, card=%s, image=%s}",
+                userId, name, email, password, address, resetPasswordToken, card, image);
     }
 
 }
