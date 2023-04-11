@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Tue Apr 11 22:45:39 CEST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0187-7211-24d8-00000ad30008 
+on database directory /home/usuario/store-app/work/database with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@8bcc55f 
+Loaded from file:/root/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=Ubuntu
+java.runtime.version=11.0.17+8-post-Ubuntu-1ubuntu220.04
+user.dir=/home/usuario/store-app
+os.name=Linux
+os.arch=amd64
+os.version=5.15.0-53-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
